@@ -11,8 +11,8 @@
 
 // Main OpenGL program
 void runProgram(GLFWwindow* window);
-
-
+void setup(GLFWwindow* window);
+unsigned int createVAO(float* vertices, int vertLen, unsigned int* indices, int indLen, float* colors, int colorsLen);
 // GLFW callback mechanisms
 void keyboardCallback(GLFWwindow* window, int key, int scancode,
                       int action, int mods);
