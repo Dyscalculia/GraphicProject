@@ -14,25 +14,50 @@ void setup(GLFWwindow* window){
 void runProgram(GLFWwindow* window){
   setup(window);
   float vertices[] = {
-    -1.0,-1.0,0.0,
-    0.0 ,-1.0,0.0,
-    -0.5,0.0 ,0.0,
-    1.0 ,-1.0,0.0,
-    0.5 ,0.0 ,0.0,
-    0.0 ,1.0 ,0.0
+    -1.000f, -1.00f, 0.0f,
+		 0.000f, -1.00f, 0.0f,
+		 1.000f, -1.00f, 0.0f,
+		-0.500f,  0.00f, 0.0f,
+		 0.500f,  0.00f, 0.0f,
+		 0.000f,  1.00f, 0.0f,
+		-0.250f, -0.50f, 0.0f,
+		 0.000f, -0.50f, 0.0f,
+		 0.250f, -0.50f, 0.0f,
+		-0.125f, -0.25f, 0.0f,
+		 0.125f, -0.25f, 0.0f,
+     0.000f, 0.00f, 0.0f,
   };
   float colors[] = {
-    1.0,0.0,0.0,
-    0.0,1.0,0.0,
-    0.0,0.0,1.0,
-    1.0,1.0,0.0,
-    1.0,0.0,1.0,
-    0.0,1.0,1.0
+    0.583f, 0.771f, 0.014f,1.0f,
+		0.609f, 0.115f, 0.436f,1.0f,
+		0.327f, 0.483f, 0.844f,1.0f,
+		0.822f, 0.569f, 0.201f,1.0f,
+		0.435f, 0.602f, 0.223f,1.0f,
+		0.597f, 0.770f, 0.761f,1.0f,
+		0.559f, 0.436f, 0.730f,1.0f,
+		0.359f, 0.583f, 0.152f,1.0f,
+		0.327f, 0.483f, 0.844f,1.0f,
+		0.559f, 0.861f, 0.639f,1.0f,
+		1.000f, 1.000f, 1.000f,1.0f,
+    0.195f, 0.548f, 0.859f, 1.0f
   };
-  unsigned int indices[] = {0,1,2,1,3,4,2,4,5};
-  int vertLen = 3*6;
-  int indLen = 9;
-  int colorsLen = 3*6;
+  unsigned int indices[] = {
+    0, 1, 3,
+		1, 2, 4,
+		3, 4, 5,
+		6, 7, 9,
+		7, 8, 10,
+    9, 10, 11
+  };
+  float transform[4][4] = {
+    1.0,0.0,0.0,0.0,
+    0.0,1.0,0.0,0.0,
+    0.0,0.0,1.0,0.0,
+    0.0,0.0,0.0,1.0,
+  };
+  int vertLen = 3*12;
+  int indLen = 3*6;
+  int colorsLen = 4*12;
   unsigned int vaoid = createVAO(vertices,vertLen,indices,indLen,colors,colorsLen);
   Gloom::Shader shader;
   shader.makeBasicShader("/home/shomec/h/haakohu/Documents/programmering/tdt4195/graphics/ov4/gloom/gloom/shaders/simple.vert","/home/shomec/h/haakohu/Documents/programmering/tdt4195/graphics/ov4/gloom/gloom/shaders/simple.frag");
@@ -43,8 +68,8 @@ void runProgram(GLFWwindow* window){
       // Draw your scene here
       shader.activate();
       glBindVertexArray(vaoid);
+      glUniformMatrix4fv(3,1,GL_FALSE,&transform[0][0]);
       glDrawElements(GL_TRIANGLES, indLen, GL_UNSIGNED_INT,0);
-
       shader.deactivate();
 
       glfwPollEvents();
@@ -70,7 +95,7 @@ unsigned int createVAO(float* vertices, int vertLen, unsigned int* indices, int 
   glBindBuffer(GL_ARRAY_BUFFER,vboid2);
   glBufferData(GL_ARRAY_BUFFER,colorsLen*sizeof(float),colors,GL_STATIC_DRAW);
   unsigned int vaid2 = 1;
-  glVertexAttribPointer(vaid2,3,GL_FLOAT,GL_FALSE,0,0);
+  glVertexAttribPointer(vaid2,4,GL_FLOAT,GL_FALSE,0,0);
   glEnableVertexAttribArray(vaid2);
 
   unsigned int indid = 0;
@@ -80,6 +105,12 @@ unsigned int createVAO(float* vertices, int vertLen, unsigned int* indices, int 
   return vaoid;
 }
 
+float x = 0;
+float y = 0;
+float z = 0;
+float hor = 0;
+float ver = 0;
+
 void keyboardCallback(GLFWwindow* window, int key, int scancode,
                       int action, int mods)
 {
@@ -87,4 +118,45 @@ void keyboardCallback(GLFWwindow* window, int key, int scancode,
     {
         glfwSetWindowShouldClose(window, GL_TRUE);
     }
+    //right
+    else if (key == GLFW_KEY_D && action == GLFW_PRESS){
+
+    }
+    //left
+    else if (key == GLFW_KEY_A && action == GLFW_PRESS){
+
+    }
+    //forward
+    else if (key == GLFW_KEY_W && action == GLFW_PRESS){
+
+    }
+    //backward
+    else if (key == GLFW_KEY_s && action == GLFW_PRESS){
+
+    }
+    //up
+    else if (key == GLFW_KEY_R && action == GLFW_PRESS){
+
+    }
+    //down
+    else if (key == GLFW_KEY_F && action == GLFW_PRESS){
+
+    }
+    //horizontal left
+    else if (key == GLFW_KEY_LEFT && action == GLFW_PRESS){
+
+    }
+    //horizontal right
+    else if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS){
+
+    }
+    //vertical up
+    else if (key == GLFW_KEY_UP && action == GLFW_PRESS){
+
+    }
+    //vertical down
+    else if (key == GLFW_KEY_DOWN && action == GLFW_PRESS){
+
+    }
+
 }
