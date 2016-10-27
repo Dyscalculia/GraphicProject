@@ -8,7 +8,7 @@
 #include "glm/vec3.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
-glm::vec3 cameraPosition = glm::vec3(0,0,1);
+glm::vec3 cameraPosition = glm::vec3(0,0,5);
 float horRotate = 0.0;
 float verRotate = 0.0;
 
