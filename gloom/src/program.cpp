@@ -74,13 +74,13 @@ void runProgram(GLFWwindow* window){
   while (!glfwWindowShouldClose(window))
   {
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+      glm::mat4 view = glm::rotate(glm::mat4(1.f), horRotate, glm::vec3(0,1,0));
+      view = glm::rotate(view,verRotate, glm::vec3(1,0,0));
+      view = glm::translate(view,-cameraPosition);
+
       glm::mat4x4 projection = glm::perspective(glm::radians(45.f),1.f,1.f,100.f);
-      glm::mat4x4 translate = glm::translate(glm::vec3(cameraPosition.x,cameraPosition.y,0));
-      glm::mat4x4 scale = glm::scale(glm::vec3(cameraPosition.z,cameraPosition.z,cameraPosition.z));
-      glm::mat4x4 rotateY = glm::rotate(glm::mat4(1.f),horRotate, glm::vec3(0,1,0));
-      glm::mat4x4 rotateX = glm::rotate(glm::mat4(1.f),verRotate,glm::vec3(1,0,0));
       //glm::mat4x4 projection = glm::perspective(45.f,1.f, 1.f,100.f);
-      glm::mat4x4 transform2 =  projection * rotateX * rotateY * translate * scale;
+      glm::mat4x4 transform2 = projection*view;
       // Draw your scene here
       shader.activate();
       glBindVertexArray(vaoid);
@@ -149,15 +149,11 @@ void keyboardCallback(GLFWwindow* window, int key, int scancode,
     }
     //forward
     else if (key == GLFW_KEY_R && action == GLFW_PRESS){
-      cameraPosition.z = cameraPosition.z + 0.1;
+      cameraPosition.z -= 0.1;
     }
     //backward
     else if (key == GLFW_KEY_F && action == GLFW_PRESS){
-      if(cameraPosition.z>0.1){
-        cameraPosition.z = cameraPosition.z - 0.1;
-      }else{
-        cameraPosition.z = 0.01;
-      }
+      cameraPosition.z += 0.1;
     }
     //horizontal left
     else if (key == GLFW_KEY_LEFT && action == GLFW_PRESS){
